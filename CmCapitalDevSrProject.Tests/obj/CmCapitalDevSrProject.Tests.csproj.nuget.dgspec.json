@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj": {}
+    "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj": {}
   },
   "projects": {
-    "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj": {
+    "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj",
+        "projectUniqueName": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj",
         "projectName": "CmCapitalDevSrProject.Tests",
-        "projectPath": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj",
+        "projectPath": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/CmCapitalDevSrProject.Tests.csproj",
         "packagesPath": "/home/magno/.nuget/packages/",
-        "outputPath": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject.Tests/obj/",
+        "outputPath": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/magno/.nuget/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj": {
-                "projectPath": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj"
+              "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj": {
+                "projectPath": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj"
               }
             }
           }
@@ -100,14 +100,14 @@
         }
       }
     },
-    "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj": {
+    "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj",
+        "projectUniqueName": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj",
         "projectName": "CmCapitalDevSrProject",
-        "projectPath": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj",
+        "projectPath": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/CmCapitalDevSrProject.csproj",
         "packagesPath": "/home/magno/.nuget/packages/",
-        "outputPath": "/home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/obj/",
+        "outputPath": "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/magno/.nuget/NuGet/NuGet.Config"

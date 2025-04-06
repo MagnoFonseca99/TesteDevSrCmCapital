@@ -122,25 +122,20 @@ public class ProdutoService : IProdutoService
     
     public async Task<List<ProdutoSugestaoDto>> SugerirProdutosAsync(int clienteId, int produtoBaseId, IClienteRepository clienteRepository)
     {
-        // 1. Busca o cliente
         var cliente = await clienteRepository.GetByIdAsync(clienteId)
                       ?? throw new ArgumentException("Cliente não encontrado");
 
-        // 2. Busca o produto base manualmente (sem EF async)
-        var produtoBase = _produtoRepository.GetAll()
-            .FirstOrDefault(p => p.Id == produtoBaseId);
+        var produtoBase = await _produtoRepository.GetAll()
+            .Include(p => p.Categoria)
+            .FirstOrDefaultAsync(p => p.Id == produtoBaseId);
 
         if (produtoBase == null)
             throw new ArgumentException("Produto base não encontrado");
 
-        if (produtoBase.Categoria == null)
-            throw new ArgumentException("Produto base não possui categoria");
-
-        // 3. Define a data máxima de vencimento
         var vencimentoMax = produtoBase.DataVencimento.AddMonths(-4);
 
-        // 4. Filtra os produtos diretamente (sem EF async)
-        var sugestoes = _produtoRepository.GetAll()
+        var sugestoes = await _produtoRepository.GetAll()
+            .Include(p => p.Categoria)
             .Where(p =>
                 p.Id != produtoBase.Id &&
                 p.CategoriaId == produtoBase.CategoriaId &&
@@ -156,10 +151,11 @@ public class ProdutoService : IProdutoService
                 DataVencimento = p.DataVencimento,
                 Categoria = p.Categoria.Nome
             })
-            .ToList();
+            .ToListAsync();
 
         return sugestoes;
     }
+
 
 
 
