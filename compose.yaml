@@ -1,0 +1,35 @@
+﻿version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongo-serilog
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: logsdb
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "Str0ng@Senha123"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    restart: unless-stopped
+
+  cmcapitaldevsrproject:
+    image: cmcapitaldevsrproject
+    build:
+      context: .
+      dockerfile: CmCapitalDevSrProject/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      sqlserver:
+        condition: service_started
+      mongodb:
+        condition: service_started
