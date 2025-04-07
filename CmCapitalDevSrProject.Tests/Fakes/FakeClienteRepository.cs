@@ -1,7 +1,7 @@
 using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Repositories.Interfaces;
 
-namespace CmCapitalDevSrProject.Tests.Repositories;
+namespace CmCapitalDevSrProject.Tests.Fakes;
 
 public class FakeClienteRepository : IClienteRepository
 {
@@ -32,5 +32,10 @@ public class FakeClienteRepository : IClienteRepository
         clienteExistente.SaldoDisponivel = clienteAtualizado.SaldoDisponivel;
 
         return Task.FromResult(clienteExistente);
+    }
+
+    public Task<bool> ExisteAsync(int clienteId)
+    {
+        return Task.FromResult(Clientes.Any(c => c.Id == clienteId));
     }
 }

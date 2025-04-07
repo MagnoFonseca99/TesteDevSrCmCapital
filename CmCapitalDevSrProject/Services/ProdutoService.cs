@@ -3,27 +3,30 @@ using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Models.DTOs;
 using CmCapitalDevSrProject.Repositories.Interfaces;
 using CmCapitalDevSrProject.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using CmCapitalDevSrProject.Services.Utils;
 
 namespace CmCapitalDevSrProject.Services;
 
 public class ProdutoService : IProdutoService
 {
     private readonly IProdutoRepository _produtoRepository;
+    private readonly ICategoriaProdutoRepository _categoriaProdutoRepository;
 
-    public ProdutoService(IProdutoRepository produtoRepository)
+    public ProdutoService(IProdutoRepository produtoRepository, ICategoriaProdutoRepository categoriaRepository)
     {
         _produtoRepository = produtoRepository;
+        _categoriaProdutoRepository = categoriaRepository;
     }
 
-    public async Task<Produto> CriarProdutoAsync(ProdutoDto dto)
+    public async Task<Produto?> CriarProdutoAsync(ProdutoDto dto)
     {
-        ValidarProduto(dto);
+        await ValidarProduto(dto);
 
         var produto = new Produto
         {
             Nome = dto.Nome,
             Preco = dto.Preco,
+            CategoriaId = dto.CategoriaId,
             QuantidadeEstoque = dto.QuantidadeEstoque,
             DataVencimento = dto.DataVencimento
         };
@@ -47,7 +50,7 @@ public class ProdutoService : IProdutoService
 
     public async Task AtualizarProdutoAsync(int id, ProdutoDto dto)
     {
-        ValidarProduto(dto);
+        await ValidarProduto(dto);
 
         var produtoAtualizado = new Produto
         {
@@ -96,8 +99,18 @@ public class ProdutoService : IProdutoService
         });
     }
 
-    private void ValidarProduto(ProdutoDto dto)
+    private async Task ValidarProduto(ProdutoDto dto)
     {
+        var categoriaExiste = await _categoriaProdutoRepository.ExisteAsync(dto.CategoriaId);
+        if (!categoriaExiste)
+        {
+            var categorias = await _categoriaProdutoRepository.ListarTodasAsync();
+            var nomes = categorias.Select(c => $"[{c.Id}] {c.Nome}");
+            var listaFormatada = string.Join(", ", nomes);
+
+            throw new ArgumentException($"Categoria não encontrada. Categorias disponíveis: {listaFormatada}");
+        }
+        
         if (dto.Preco < 0)
             throw new ArgumentException("Preço não pode ser negativo");
 
@@ -125,17 +138,13 @@ public class ProdutoService : IProdutoService
         var cliente = await clienteRepository.GetByIdAsync(clienteId)
                       ?? throw new ArgumentException("Cliente não encontrado");
 
-        var produtoBase = await _produtoRepository.GetAll()
-            .Include(p => p.Categoria)
-            .FirstOrDefaultAsync(p => p.Id == produtoBaseId);
-
+        var produtoBase = await _produtoRepository.ObterProdutoComCategoriaAsync(produtoBaseId);
         if (produtoBase == null)
             throw new ArgumentException("Produto base não encontrado");
 
         var vencimentoMax = produtoBase.DataVencimento.AddMonths(-4);
 
         var sugestoes = await _produtoRepository.GetAll()
-            .Include(p => p.Categoria)
             .Where(p =>
                 p.Id != produtoBase.Id &&
                 p.CategoriaId == produtoBase.CategoriaId &&
@@ -149,12 +158,13 @@ public class ProdutoService : IProdutoService
                 Nome = p.Nome,
                 Preco = p.Preco,
                 DataVencimento = p.DataVencimento,
-                Categoria = p.Categoria.Nome
+                Categoria = p.Categoria.Nome ?? "Desconhecida"
             })
-            .ToListAsync();
+            .SafeToListAsync();
 
         return sugestoes;
     }
+
 
 
 

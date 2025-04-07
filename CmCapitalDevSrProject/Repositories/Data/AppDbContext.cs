@@ -13,6 +13,9 @@ public class AppDbContext : DbContext
     public DbSet<ProdutoAuditoria> ProdutosAuditoria => Set<ProdutoAuditoria>();
     
     public DbSet<CategoriaProduto> Categorias => Set<CategoriaProduto>();
+    
+    public DbSet<InteresseProdutoFuturo> InteressesProdutosFuturos => Set<InteresseProdutoFuturo>();
+
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

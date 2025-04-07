@@ -13,4 +13,7 @@ public interface IProdutoRepository
     
     Task<List<Produto>> ListarEstoqueAbaixoAsync(int limiteMinimo);
     IQueryable<Produto?> GetAll(); 
+    Task<Produto?> ObterProdutoComCategoriaAsync(int id);
+    
+    
 }

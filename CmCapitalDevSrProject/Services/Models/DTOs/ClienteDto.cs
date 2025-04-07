@@ -1,4 +1,4 @@
-namespace CmCapitalDevSrProject.Models.DTOs;
+namespace CmCapitalDevSrProject.Services.Models.DTOs;
 
 public class ClienteDto
 {

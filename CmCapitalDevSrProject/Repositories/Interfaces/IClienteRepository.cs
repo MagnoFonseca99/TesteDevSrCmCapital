@@ -9,4 +9,6 @@ public interface IClienteRepository
     Task<Cliente?> GetByIdAsync(int clienteId);
 
     Task<Cliente> UpdateAsync(int clienteId, Cliente clienteAtualizado);
+    
+    Task<bool> ExisteAsync(int clienteId);
 }

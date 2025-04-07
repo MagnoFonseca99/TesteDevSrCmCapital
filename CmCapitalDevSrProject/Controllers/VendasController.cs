@@ -1,5 +1,7 @@
 using CmCapitalDevSrProject.Models.DTOs;
 using CmCapitalDevSrProject.Services.Interfaces;
+using CmCapitalDevSrProject.Services.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CmCapitalDevSrProject.Controllers;
@@ -20,6 +22,7 @@ public class VendasController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> RealizarVenda([FromBody] VendaDto vendaDto)
     {
         _logger.LogInformation("POST /api/vendas - RealizarVenda iniciado. Payload: {@VendaDto}", vendaDto);
@@ -46,6 +49,50 @@ public class VendasController : ControllerBase
         {
             _logger.LogError(ex, "Erro inesperado ao realizar venda.");
             return StatusCode(500, new { mensagem = "Erro interno no servidor. Contate o suporte." });
+        }
+    }
+    [HttpPost("estornar")]
+    [Authorize]
+    public async Task<IActionResult> EstornarVenda([FromBody] EstornoVendaDto dto)
+    {
+        _logger.LogInformation("POST /api/vendas/estornar - Pedido de estorno da venda {VendaId} pelo cliente {ClienteId}", dto.VendaId, dto.ClienteId);
+
+        try
+        {
+            await _service.RealizarEstornoAsync(dto);
+            return Ok(new { mensagem = "Estorno realizado com sucesso." });
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogWarning(ex, "Erro de validação no estorno.");
+            return BadRequest(new { mensagem = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogWarning(ex, "Estorno inválido.");
+            return UnprocessableEntity(new { mensagem = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro inesperado ao estornar venda.");
+            return StatusCode(500, new { mensagem = "Erro interno no servidor." });
+        }
+    }
+    
+    [HttpPost("relatorio")]
+    public async Task<IActionResult> GerarRelatorioVendas([FromBody] RelatorioVendasFiltroDto filtro)
+    {
+        _logger.LogInformation("POST /api/vendas/relatorio - Gerando relatório com filtros: {@Filtro}", filtro);
+
+        try
+        {
+            var resultado = await _service.GerarRelatorioAsync(filtro);
+            return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao gerar relatório de vendas.");
+            return StatusCode(500, new { mensagem = "Erro interno no servidor." });
         }
     }
 }

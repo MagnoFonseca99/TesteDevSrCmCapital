@@ -192,7 +192,6 @@
 /home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject.Tests/obj/Debug/net8.0/ref/CmCapitalDevSrProject.Tests.dll
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/.msCoverageSourceRootsMapping_CmCapitalDevSrProject.Tests
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/CoverletSourceRootsMapping_CmCapitalDevSrProject.Tests
-/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/appsettings.Development.json
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/appsettings.json
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/xunit.runner.reporters.netcoreapp10.dll
@@ -383,3 +382,5 @@
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/obj/Debug/net8.0/CmCapitalDevSrProject.Tests.pdb
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/obj/Debug/net8.0/CmCapitalDevSrProject.Tests.genruntimeconfig.cache
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/obj/Debug/net8.0/ref/CmCapitalDevSrProject.Tests.dll
+/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject.Tests/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll

@@ -2,7 +2,7 @@ using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Models.DTOs;
 using CmCapitalDevSrProject.Repositories;
 using CmCapitalDevSrProject.Services;
-using CmCapitalDevSrProject.Tests.Repositories;
+using CmCapitalDevSrProject.Tests.Fakes;
 using FluentAssertions;
 
 namespace CmCapitalDevSrProject.Tests.Services;
@@ -13,14 +13,16 @@ public class ProdutoServiceTests
     public async Task CriarProduto_DeveRetornarProduto_QuandoValido()
     {
         // Arrange
-        var repository = new FakeProdutoRepository();
-        var service = new ProdutoService(repository);
+        var produtoRepository = new FakeProdutoRepository();
+        var categoriaRepository = new FakeCategoriaProdutoRepository();
+        var service = new ProdutoService(produtoRepository,categoriaRepository);
 
         var dto = new ProdutoDto
         {
             Nome = "Notebook",
             Preco = 2500,
             QuantidadeEstoque = 10,
+            CategoriaId = 1,
             DataVencimento = DateTime.Now.AddDays(30)
         };
 
@@ -36,14 +38,16 @@ public class ProdutoServiceTests
     [Fact]
     public async Task CriarProduto_DeveLancarExcecao_QuandoPrecoNegativo()
     {
-        var repository = new FakeProdutoRepository();
-        var service = new ProdutoService(repository);
+        var produtoRepository = new FakeProdutoRepository();
+        var categoriaRepository = new FakeCategoriaProdutoRepository();
+        var service = new ProdutoService(produtoRepository,categoriaRepository);
 
         var dto = new ProdutoDto
         {
             Nome = "TV",
             Preco = -100,
             QuantidadeEstoque = 1,
+            CategoriaId = 1,
             DataVencimento = DateTime.Now.AddDays(10)
         };
 
@@ -56,14 +60,16 @@ public class ProdutoServiceTests
     [Fact]
     public async Task CriarProduto_DeveLancarExcecao_QuandoDataVencida()
     {
-        var repository = new FakeProdutoRepository();
-        var service = new ProdutoService(repository);
+        var produtoRepository = new FakeProdutoRepository();
+        var categoriaRepository = new FakeCategoriaProdutoRepository();
+        var service = new ProdutoService(produtoRepository,categoriaRepository);
 
         var dto = new ProdutoDto
         {
             Nome = "Produto Vencido",
             Preco = 50,
             QuantidadeEstoque = 5,
+            CategoriaId = 1,
             DataVencimento = DateTime.Now.AddDays(-1)
         };
 
@@ -77,10 +83,11 @@ public class ProdutoServiceTests
     public async Task BuscarProdutos_DeveFiltrarPorPrecoEEstoque()
     {
         // Arrange
-        var repository = new FakeProdutoRepository();
-        var service = new ProdutoService(repository);
+        var produtoRepository = new FakeProdutoRepository();
+        var categoriaRepository = new FakeCategoriaProdutoRepository();
+        var service = new ProdutoService(produtoRepository,categoriaRepository);
 
-        repository.Produtos.AddRange(new[]
+        produtoRepository.Produtos.AddRange(new[]
         {
             new Produto
             {
@@ -137,10 +144,11 @@ public class ProdutoServiceTests
     public async Task ObterProdutosComEstoqueBaixoAsync_DeveRetornarApenasProdutosCriticos()
     {
         // Arrange
-        var repository = new FakeProdutoRepository();
-        var service = new ProdutoService(repository);
+        var produtoRepository = new FakeProdutoRepository();
+        var categoriaRepository = new FakeCategoriaProdutoRepository();
+        var service = new ProdutoService(produtoRepository,categoriaRepository);
 
-        repository.Produtos.AddRange(new[]
+        produtoRepository.Produtos.AddRange(new[]
         {
             new Produto
             {
@@ -186,79 +194,83 @@ public class ProdutoServiceTests
     }
     
     [Fact]
-    public async Task SugerirProdutosAsync_DeveRetornarSugestoesDaMesmaCategoriaDentroDoSaldoEVencimento()
+    public async Task SugerirProdutosAsync_DeveRetornarProdutosValidos()
     {
         // Arrange
         var produtoRepository = new FakeProdutoRepository();
         var clienteRepository = new FakeClienteRepository();
+        var categoriaRepository = new FakeCategoriaProdutoRepository();
+        
 
-        var categoriaId = 1;
-        var dataBase = DateTime.Now.AddMonths(8);
+        var categoria = new CategoriaProduto { Id = 1, Nome = "Renda Fixa" };
 
-        // Produto base
         var produtoBase = new Produto
         {
-            Id = 100,
-            Nome = "Produto Base",
+            Nome = "Base",
             Preco = 1000,
-            CategoriaId = categoriaId,
-            QuantidadeEstoque = 5,
-            DataVencimento = dataBase,
-            Categoria = new CategoriaProduto { Id = categoriaId, Nome = "Renda Fixa" }
+            DataVencimento = DateTime.Today.AddMonths(6),
+            Categoria = categoria,
+            CategoriaId = categoria.Id
         };
+        await produtoRepository.AddAsync(produtoBase);
 
-        // Sugestões válidas e inválidas
-        var sugestoes = new List<Produto>
+        // Produtos válidos (mesma categoria, vencimento <= base - 4 meses, preço <= saldo)
+        await produtoRepository.AddAsync(new Produto
         {
-            new Produto
-            {
-                Id = 1,
-                Nome = "Sugestão A",
-                Preco = 300,
-                CategoriaId = categoriaId,
-                DataVencimento = dataBase.AddMonths(-5),
-                Categoria = new CategoriaProduto { Id = categoriaId, Nome = "Renda Fixa" }
-            },
-            new Produto
-            {
-                Id = 2,
-                Nome = "Sugestão B",
-                Preco = 500,
-                CategoriaId = categoriaId,
-                DataVencimento = dataBase.AddMonths(-4),
-                Categoria = new CategoriaProduto { Id = categoriaId, Nome = "Renda Fixa" }
-            },
-            new Produto
-            {
-                Id = 5,
-                Nome = "Fora do Vencimento",
-                Preco = 600,
-                CategoriaId = categoriaId,
-                DataVencimento = dataBase.AddMonths(-3), // inválido: muito próximo do vencimento
-                Categoria = new CategoriaProduto { Id = categoriaId, Nome = "Renda Fixa" }
-            }
-        };
-
-        // Adiciona os produtos ao repositório fake
-        produtoRepository.Produtos.Add(produtoBase);
-        produtoRepository.Produtos.AddRange(sugestoes);
-
-        // Cliente com saldo disponível
-        clienteRepository.Clientes.Add(new Cliente
-        {
-            Id = 1,
-            Nome = "Cliente",
-            SaldoDisponivel = 600
+            Nome = "Produto 1",
+            Preco = 300,
+            DataVencimento = DateTime.Today.AddMonths(1),
+            Categoria = categoria,
+            CategoriaId = categoria.Id
         });
 
-        var service = new ProdutoService(produtoRepository);
+        await produtoRepository.AddAsync(new Produto
+        {
+            Nome = "Produto 2",
+            Preco = 200,
+            DataVencimento = DateTime.Today.AddMonths(2),
+            Categoria = categoria,
+            CategoriaId = categoria.Id
+        });
+
+        // Inválido: vencimento > base - 4 meses
+        await produtoRepository.AddAsync(new Produto
+        {
+            Nome = "Produto fora do prazo",
+            Preco = 100,
+            DataVencimento = DateTime.Today.AddMonths(5),
+            Categoria = categoria,
+            CategoriaId = categoria.Id
+        });
+
+        // Inválido: outra categoria
+        await produtoRepository.AddAsync(new Produto
+        {
+            Nome = "Produto outra categoria",
+            Preco = 150,
+            DataVencimento = DateTime.Today.AddMonths(1),
+            Categoria = new CategoriaProduto { Id = 2, Nome = "Ações" },
+            CategoriaId = 2
+        });
+
+        var cliente = new Cliente
+        {
+            Nome = "Cliente Teste",
+            SaldoDisponivel = 400
+        };
+        await clienteRepository.AddAsync(cliente);
+
+        var service = new ProdutoService(produtoRepository, categoriaRepository);
 
         // Act
-        var resultado = await service.SugerirProdutosAsync(1, 100, clienteRepository);
+        var sugestoes = await service.SugerirProdutosAsync(cliente.Id, produtoBase.Id, clienteRepository);
 
         // Assert
-        resultado.Should().HaveCount(2);
-        resultado.Select(r => r.Nome).Should().BeEquivalentTo("Sugestão A", "Sugestão B");
+        Assert.Equal(2, sugestoes.Count);
+        Assert.Contains(sugestoes, s => s.Nome == "Produto 1");
+        Assert.Contains(sugestoes, s => s.Nome == "Produto 2");
+        Assert.DoesNotContain(sugestoes, s => s.Nome == "Produto fora do prazo");
+        Assert.DoesNotContain(sugestoes, s => s.Nome == "Produto outra categoria");
     }
 
 

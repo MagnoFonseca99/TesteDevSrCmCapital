@@ -2,7 +2,7 @@ using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Models.DTOs;
 using CmCapitalDevSrProject.Repositories.Interfaces;
 
-namespace CmCapitalDevSrProject.Tests.Repositories;
+namespace CmCapitalDevSrProject.Tests.Fakes;
 
 public class FakeProdutoRepository : IProdutoRepository
 {
@@ -111,5 +111,10 @@ public class FakeProdutoRepository : IProdutoRepository
             .Cast<Produto>() // necessário pois a lista é de Produto?
             .AsQueryable();
     }
+    public Task<Produto?> ObterProdutoComCategoriaAsync(int id)
+    {
+        return Task.FromResult(Produtos.FirstOrDefault(p => p?.Id == id));
+    }
+
     
 }

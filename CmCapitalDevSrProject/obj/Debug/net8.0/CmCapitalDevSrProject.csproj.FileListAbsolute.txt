@@ -189,7 +189,6 @@
 /home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/obj/Debug/net8.0/CmCapitalDevSrProject.pdb
 /home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/obj/Debug/net8.0/CmCapitalDevSrProject.genruntimeconfig.cache
 /home/magno/Softwares/Testes/CmCapitalDevSrProject/CmCapitalDevSrProject/obj/Debug/net8.0/ref/CmCapitalDevSrProject.dll
-/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/bin/Debug/net8.0/appsettings.Development.json
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/bin/Debug/net8.0/appsettings.json
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/bin/Debug/net8.0/CmCapitalDevSrProject
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/bin/Debug/net8.0/CmCapitalDevSrProject.deps.json
@@ -381,3 +380,5 @@
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/obj/Debug/net8.0/CmCapitalDevSrProject.pdb
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/obj/Debug/net8.0/CmCapitalDevSrProject.genruntimeconfig.cache
 /home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/obj/Debug/net8.0/ref/CmCapitalDevSrProject.dll
+/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll

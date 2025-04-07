@@ -12,4 +12,8 @@ public class Venda
     public int Quantidade { get; set; }
     public decimal ValorTotal { get; set; }
     public DateTime DataVenda { get; set; } = DateTime.Now;
+    
+    public bool Estornada { get; set; } = false;
+    public DateTime? DataEstorno { get; set; }
+
 }

@@ -2,6 +2,7 @@ using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Models.DTOs;
 using CmCapitalDevSrProject.Repositories.Interfaces;
 using CmCapitalDevSrProject.Services.Interfaces;
+using CmCapitalDevSrProject.Services.Models.DTOs;
 
 namespace CmCapitalDevSrProject.Services;
 
@@ -27,4 +28,9 @@ public class ClienteService : IClienteService
 
         return await _repository.AddAsync(cliente);
     }
+    public async Task<Cliente?> ObterPorIdAsync(int id)
+    {
+        return await _repository.GetByIdAsync(id);
+    }
+
 }

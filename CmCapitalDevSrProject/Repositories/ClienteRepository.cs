@@ -1,6 +1,7 @@
 using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Repositories.Data;
 using CmCapitalDevSrProject.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CmCapitalDevSrProject.Repositories;
 
@@ -41,4 +42,8 @@ public class ClienteRepository : IClienteRepository
         return clienteExistente;
     }
 
+    public async Task<bool> ExisteAsync(int clienteId)
+    {
+        return await _context.Clientes.AnyAsync(c => c.Id == clienteId);
+    }
 }

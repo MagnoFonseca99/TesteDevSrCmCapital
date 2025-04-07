@@ -1,7 +1,8 @@
 using CmCapitalDevSrProject.Models;
 using CmCapitalDevSrProject.Models.DTOs;
 using CmCapitalDevSrProject.Services;
-using CmCapitalDevSrProject.Tests.Repositories;
+using CmCapitalDevSrProject.Services.Models.DTOs;
+using CmCapitalDevSrProject.Tests.Fakes;
 using FluentAssertions;
 
 namespace CmCapitalDevSrProject.Tests;

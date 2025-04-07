@@ -74,6 +74,13 @@ public class ProdutoRepository : IProdutoRepository
             Items = items
         };
     }
+    
+    public async Task<Produto?> ObterProdutoComCategoriaAsync(int id)
+    {
+        return await _context.Produtos
+            .Include(p => p.Categoria)
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
 
 
 
