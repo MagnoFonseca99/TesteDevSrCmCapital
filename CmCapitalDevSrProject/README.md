@@ -79,7 +79,7 @@ dotnet ef database update --project CmCapitalDevSrProject --startup-project CmCa
 
 ### 5. Inserir Dados de Exemplo
 
-Conecte-se no banco de dados e Execute o script SQL"./TesteDevSrCmCapital/DbScripts/Inserts.txt"  com os dados iniciais.
+Conecte-se no banco de dados com as credenciais da aplicação e Execute o script SQL"./TesteDevSrCmCapital/DbScripts/Inserts.txt"  com os dados iniciais.
 
 ---
 
@@ -93,11 +93,24 @@ A API estará disponível em:
 
 ## 🧪 Executar Testes
 
-No host (fora do container):
+No host (fora do container), ainda no diretório raiz do projeto (onde está o `docker-compose.yml`):
 
 ```bash
 dotnet test
 ```
+
+---
+## Login com credenicais fictícias
+
+Para efeito de exemplificação de fluxo de autenticação usando JWT, apenas um usuário de exemplo foi criado
+
+```json
+{
+    "Usuario": "TestUser",
+    "Senha": "123456"
+}
+```
+
 
 ---
 
@@ -131,6 +144,7 @@ Disponível via Swagger:
 ---
 ## 📝 Observações
 
+- Importante: Essa aplicação precisa de mais ajustes para rodar e ambiente produtivo. Tudo foi construído para testes locais
 - Logs são enviados ao MongoDB via Serilog.
 - Autenticação JWT protege os endpoints.
 - O projeto segue GitFlow para versionamento.
@@ -142,7 +156,6 @@ Disponível via Swagger:
 - Frontend em Angular (diferencial sugerido)
 - Testes de integração com banco real
 - Endpoint para monitoramento de logs
+- Mais endpoints de consultas, produtos filtrados, cliente filtrados, vendas e mudanças nos produtos
 
 ---
-
-Se quiser, posso salvar isso como `README.md` pronto para commit. Deseja que eu gere o arquivo?
