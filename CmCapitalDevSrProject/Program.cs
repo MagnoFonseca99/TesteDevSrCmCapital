@@ -103,7 +103,6 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IVendaRepository, VendaRepository>();
 builder.Services.AddScoped<IVendaService, VendaService>();
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

@@ -4,6 +4,8 @@ using CmCapitalDevSrProject.Repositories.Interfaces;
 using CmCapitalDevSrProject.Services.Interfaces;
 using CmCapitalDevSrProject.Services.Models.DTOs;
 
+namespace CmCapitalDevSrProject.Services;
+
 public class VendaService : IVendaService
 {
     private readonly IClienteRepository _clienteRepo;

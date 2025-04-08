@@ -28,6 +28,7 @@ services:
       dockerfile: CmCapitalDevSrProject/Dockerfile
     ports:
       - "8080:8080"
+      - "8081:8081"
     depends_on:
       sqlserver:
         condition: service_started
