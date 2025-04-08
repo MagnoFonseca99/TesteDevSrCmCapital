@@ -132,7 +132,6 @@ Para efeito de exemplificação de fluxo de autenticação usando JWT, apenas um
 
 ### Relatórios
 - Agrupamento por produto e período
-- Indicação de promoções aplicadas
 
 ---
 
