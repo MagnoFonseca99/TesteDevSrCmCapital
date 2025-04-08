@@ -15,9 +15,9 @@ RUN dotnet build "CmCapitalDevSrProject.csproj" -c $BUILD_CONFIGURATION -o /app/
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "CmCapitalDevSrProject.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CmCapitalDevSrProject.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=true
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CmCapitalDevSrProject.dll"]
+ENTRYPOINT ["dotnet run", "CmCapitalDevSrProject.dll"]

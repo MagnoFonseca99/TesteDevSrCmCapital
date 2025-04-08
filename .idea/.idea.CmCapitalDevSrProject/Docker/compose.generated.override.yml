@@ -25,14 +25,14 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "cmcapitaldevsrproject:dev"
     ports:
-    - "127.0.0.1:57000:57000"
-    - "127.0.0.1:57200:57200"
-    - "127.0.0.1:57400:57400"
+    - "127.0.0.1:57007:57000"
+    - "127.0.0.1:57207:57200"
+    - "127.0.0.1:57407:57400"
     volumes:
     - "/home/magno/Softwares/Testes/TesteDevSrCmCapital/CmCapitalDevSrProject:/app:rw"
     - "/home/magno/Softwares/Testes/TesteDevSrCmCapital:/src:rw"
     - "/home/magno/.nuget/packages:/home/app/.nuget/packages"
     - "/home/magno/.local/share/JetBrains/RiderRemoteDebugger/2024.3.7/Linux64:/opt/JetBrains/RiderDebuggerTools"
     - "/snap/rider/563/bin/backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
-    - "/home/magno/.cache/JetBrains/Rider2024.3/log/DebuggerWorker/JetBrains.Debugger.Worker.2025_4_07_21_44_26:/var/opt/JetBrains/RiderDebuggerTools:rw"
+    - "/home/magno/.cache/JetBrains/Rider2024.3/log/DebuggerWorker/JetBrains.Debugger.Worker.2025_4_07_23_13_40:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
